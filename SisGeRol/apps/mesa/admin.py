@@ -8,3 +8,4 @@ class MesaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'sistema', 'director')
 
 admin.site.register(Mesa, MesaAdmin)
+

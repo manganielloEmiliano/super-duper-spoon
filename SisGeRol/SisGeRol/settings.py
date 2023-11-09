@@ -36,7 +36,8 @@ EXTERNAL_APPS=[
 LOCAL_APPS=[
     'apps.socio',
     'apps.mesa',
-    'apps.mensualidad'
+    'apps.mensualidad',
+    'apps.custom_user',
     
 ]
 DJANGO_APPS = [
