@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lista de Socios</title>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+    <style>
+        .author-details {
+            margin: 20px;
+        }
+
+        .logout-form {
+            text-align: right;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Lista de Socios</span>
+                <div class="mdl-layout-spacer"></div>
+                <div class="logout-form">
+                    <form method="post" action="{% url 'custom_logout' %}">
+                        {% csrf_token %}
+                        <button type="submit"
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Cerrar
+                            sesión</button>
+                    </form>
+                </div>
+            </div>
+        </header>
+        <main class="mdl-layout__content">
+            <div class="mdl-grid">
+                {% for socio in socios %}
+                <div class="mdl-cell mdl-cell--4-col mdl-cell--4-offset">
+                    <div class="mdl-card mdl-shadow--6dp author-details">
+                        <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                            <h2 class="mdl-card__title-text"><a href="{% url 'socio-detail' pk=socio.pk %}">Detalles del
+                                    Socio</a></h2>
+                        </div>
+
+                        <div class="mdl-card mdl-shadow--6dp">
+                            <div class="mdl-card__supporting-text">
+                                <p><strong>Nombre:</strong> {{ socio.nombre }}</p>
+                                <p><strong>Apellido:</strong> {{ socio.apellido }}</p>
+                                <p><strong>DNI:</strong> {{ socio.dni }}</p>
+                                <p><strong>Fecha de Nacimiento:</strong> {{ socio.fecha_nacimiento }}</p>
+                            </div>
+                        </div>
+
+                        <div class="mdl-card__supporting-text">
+                            <h3>Mesas Jugadas:</h3>
+                            <ul>
+                                {% for mesa in socio.mesas_jugadas.all %}
+                                <li>
+                                    <strong>Nombre de la Mesa:</strong> {{ mesa.nombre }}<br>
+                                    <strong>Descripción:</strong> {{ mesa.descripcion }}<br>
+                                    <strong>Sistema:</strong> {{ mesa.sistema }}<br>
+                                    <strong>Costo:</strong> {{ mesa.costo }}<br>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="mdl-card__supporting-text">
+                            <h3>Mesas Dirigidas:</h3>
+                            <ul>
+                                {% for mesa in socio.mesas_dirigidas.all %}
+                                <li>
+                                    <strong>Nombre de la Mesa:</strong> {{ mesa.nombre }}<br>
+                                    <strong>Descripción:</strong> {{ mesa.descripcion }}<br>
+                                    <strong>Sistema:</strong> {{ mesa.sistema }}<br>
+                                    <strong>costo:</strong> {{ mesa.costo_director }}<br>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</body>
+
+</html>
+

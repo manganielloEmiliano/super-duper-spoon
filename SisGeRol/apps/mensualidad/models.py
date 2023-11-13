@@ -3,8 +3,8 @@ from apps.socio.models import Socio
 from apps.mesa.models import Mesa
 
 class Mensualidad(models.Model):
-    mesa = models.ForeignKey(Mesa, on_delete=models.CASCADE)
-    socio = models.ForeignKey(Socio, on_delete=models.CASCADE)
+    mesa = models.ForeignKey(Mesa, on_delete=models.CASCADE, related_name='mensualidades')
+    socio = models.ForeignKey(Socio, on_delete=models.CASCADE, related_name='mensualidades')
     mes = models.PositiveIntegerField()  # Campo para el número de mes (1, 2 o 3)
     pagada = models.BooleanField(default=False)
     costo_a_pagar = models.DecimalField(max_digits=8, decimal_places=2, default=0)
@@ -20,4 +20,4 @@ class Mensualidad(models.Model):
         super(Mensualidad, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Mensualidad para {self.socio.nombre} {self.socio.apellido} (Mesa: {self.mesa.nombre}, Mes: {self.mes}, costo a pagar: {self.costo_a_pagar})"
+        return f"Mensualidad para {self.socio.nombre} {self.socio.apellido} (Mesa: {self.mesa.nombre}, Mes: {self.mes}, costo pagado: {self.costo_a_pagar})"

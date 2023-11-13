@@ -1,6 +1,7 @@
 from django.urls import path
-from apps.socio.views import SocioView
+from .views import SocioListView, SocioView
 
 urlpatterns = [
-    path("detalle/<int:pk>/", SocioView.as_view(), name="detalle_socio"),
+    path('', SocioListView.as_view(), name='socio-list'),
+    path('socio/<int:pk>/', SocioView.as_view(), name='socio-detail'),
 ]
