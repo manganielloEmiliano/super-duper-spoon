@@ -1,55 +1,60 @@
+from django import forms
 from django.views.generic.list import ListView
 from django.utils.decorators import method_decorator
-from django.views.generic import DetailView
+
+
 from apps.core.util import admin_required
 from apps.mensualidad.models import Mensualidad
-from apps.socio.models import Socio
-from apps.mesa.models import Mesa
+from apps.mensualidad.mensualidadForm import MensualidadForm
+
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.views.generic.detail import DetailView
 
+@method_decorator(admin_required, name="dispatch")
 class MensualidadListView(ListView):
     model = Mensualidad
     template_name = 'mensualidad_list.html'
-    context_object_name = 'mensualidades'  # Nombre de la variable de contexto en la plantilla
+    context_object_name = 'mensualidades'  
 
     def get_queryset(self):
-        # Ordenar las mensualidades por socio y mes
+        
         return Mensualidad.objects.order_by('socio', 'mes')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Aquí puedes agregar más información al contexto si es necesario
-        # Ejemplo: context['otra_variable'] = valor
-
+        
         return context
-    
 
-class MensualidadDetailView(DetailView):
+@method_decorator(admin_required, name="dispatch")
+class mensualidadDetailView(DetailView):
     model = Mensualidad
-    template_name = 'mensualidad_detail.html'
+    template_name = 'detail_mensualidad.html'
+    context_object_name = 'mensualidad'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['fechas'] = self.object.fechas.all()
+        
         return context
-
+    
+@method_decorator(admin_required, name="dispatch")
 class MensualidadCreateView(CreateView):
     model = Mensualidad
-    template_name = 'mensualidad/mensualidad_form.html'
-    fields = ['mes', 'pagada']  # Ajusta los campos según tus necesidades
-
-    def form_valid(self, form):
-        form.instance.mesa = Mesa.objects.get(pk=self.kwargs['mesa_pk'])
-        form.instance.socio = Socio.objects.get(pk=self.kwargs['socio_pk'])
-        return super().form_valid(form)
-
-class MensualidadUpdateView(UpdateView):
-    model = Mensualidad
-    template_name = 'mensualidad/mensualidad_form.html'
-    fields = ['mes', 'pagada']  # Ajusta los campos según tus necesidades
-
+    form_class = MensualidadForm  # Usa el formulario correcto
+    template_name = 'create_mensualidad.html'
+    
+    def get_success_url(self):
+        return reverse_lazy('mensualidad-list')
+    
 class MensualidadDeleteView(DeleteView):
     model = Mensualidad
-    template_name = 'mensualidad/mensualidad_confirm_delete.html'
+    template_name = 'delete_mensualidad.html'
     success_url = reverse_lazy('mensualidad-list')
+
+@method_decorator(admin_required, name="dispatch")
+class MensualidadUpdateView(UpdateView):
+    model = Mensualidad
+    form_class = MensualidadForm
+    template_name = 'update_mensualidad.html'
+    def get_success_url(self):
+        return reverse_lazy('mensualidad-detail', kwargs={'pk': self.object.pk}) 

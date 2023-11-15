@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Mesa{% endblock %}
+
+{% block page_title %}Eliminar Mesa{% endblock %}
+
+{% block content %}
+    <div class="mdl-card mdl-shadow--2dp" style="width: 50%; margin: auto; margin-top: 20px;">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Eliminar Mesa</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <p>¿Estás seguro de que deseas eliminar esta mesa?</p>
+            <form method="post" action="{% url 'mesa-delete' mesa.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Sí, eliminar</button>
+                <a href="{% url 'mesa_list' %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Cancelar</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

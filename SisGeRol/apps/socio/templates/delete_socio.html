@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Socio{% endblock %}
+
+{% block page_title %}Eliminar Socio{% endblock %}
+
+{% block content %}
+    <div class="mdl-card mdl-shadow--2dp" style="width: 50%; margin: auto; margin-top: 20px;">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Eliminar Socio</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <p>¿Estás seguro de que deseas eliminar al socio "{{ socio }}"?</p>
+            <form method="post" action="{% url 'socio-delete' socio.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Eliminar</button>
+                <a href="{% url 'socio-list' %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Cancelar</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

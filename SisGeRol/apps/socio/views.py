@@ -1,9 +1,13 @@
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
-from django.shortcuts import render, get_object_or_404
+from .socioForm import SocioForm
 from apps.core.util import admin_required
 from .models import Socio
 from django.utils.decorators import method_decorator
+from django.views.generic.edit import CreateView
+from django.views.generic.edit import DeleteView
+from django.views.generic.edit import UpdateView
 
 
 @method_decorator(admin_required, name="dispatch")
@@ -40,3 +44,28 @@ def obtener_sistemas_jugados(socio):
 
 def obtener_sistemas_dirigidos(socio):
     return list(set(mesa.sistema for mesa in socio.mesas_dirigidas.all()))
+
+
+@method_decorator(admin_required, name="dispatch")
+class SocioCreateView(CreateView):
+    model = Socio
+    form_class = SocioForm
+    template_name = "create_socio.html"
+    success_url = reverse_lazy('socio-list')
+    
+@method_decorator(admin_required, name="dispatch")
+class SocioDeleteView(DeleteView):
+    model = Socio
+    template_name = "delete_socio.html"
+    context_object_name = "socio"
+    success_url = reverse_lazy('socio-list')
+
+@method_decorator(admin_required, name="dispatch")
+class SocioUpdateView(UpdateView):
+    model = Socio
+    form_class = SocioForm
+    template_name = "update_socio.html"
+    context_object_name = "socio"
+
+    def get_success_url(self):
+        return reverse_lazy('socio-detail', kwargs={'pk': self.object.pk})

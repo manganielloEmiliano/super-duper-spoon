@@ -25,7 +25,8 @@ class Mesa(models.Model):
             return 2500
         else:
             return 0
-    
+    def duracion_meses_range(self):
+        return range(1, self.duracion_meses + 1)
     def mensualidades_socio(self, socio):
         return self.mensualidad_set.filter(socio=socio)
     

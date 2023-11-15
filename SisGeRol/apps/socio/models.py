@@ -1,8 +1,5 @@
 from django.db import models
 
-
-
-
 class Socio(models.Model):
  nombre = models.CharField( max_length=50,default='')
  apellido = models.CharField( max_length=50,default='')

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalles de la Mensualidad{% endblock %}
+
+{% block extra_head %}
+    <style>
+        /* Estilos específicos para detalles_mensualidad.html */
+        .mensualidad-details {
+            margin: 20px;
+        }
+
+        .section-title {
+            color: #FFF;
+            background-color: #2196F3;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        .info-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-list li {
+            margin-bottom: 8px;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+        }
+
+        .action-buttons button {
+            margin-right: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block page_title %}Detalles de la Mensualidad{% endblock %}
+
+{% block content %}
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-offset">
+            <div class="mdl-card mdl-shadow--6dp mensualidad-details">
+                <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                    <h2 class="mdl-card__title-text">Detalles de la Mensualidad</h2>
+                </div>
+
+                <!-- Información Básica -->
+                <div class="mdl-card__supporting-text">
+                    <h3 class="section-title">Información Básica:</h3>
+                    <ul class="info-list">
+                        <li><strong>Mesa:</strong> {{ mensualidad.mesa.nombre }}</li>
+                        <li><strong>Socio:</strong> {{ mensualidad.socio.nombre }} {{ mensualidad.socio.apellido }}</li>
+                        <li><strong>Mes:</strong> {{ mensualidad.mes }}</li>
+                        <li><strong>Valor a Pagar:</strong> ${{ mensualidad.costo_a_pagar }}</li>
+                        <li><strong>Pagada:</strong> {% if mensualidad.pagada %}Sí{% else %}No{% endif %}</li>
+                        <li><strong>Fecha:</strong> {{ mensualidad.fecha }}</li>
+                    </ul>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="action-buttons">
+                    <a href="{% url 'mensualidad-update' pk=mensualidad.pk %}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Editar</a>
+                    <button onclick="confirmDelete()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmDelete() {
+            var confirmDelete = confirm("¿Estás seguro de que deseas eliminar esta mensualidad?");
+            if (confirmDelete) {
+                window.location.href = "{% url 'mensualidad-delete' pk=mensualidad.pk %}";
+            }
+        }
+    </script>
+{% endblock %}
