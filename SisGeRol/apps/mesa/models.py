@@ -16,7 +16,7 @@ class Mesa(models.Model):
     duracion_meses = models.PositiveIntegerField(default=3)
     
     costo = models.DecimalField(max_digits=8, decimal_places=2, default=0)
-    costo_director = models.DecimalField(max_digits=8, decimal_places=2, default=0)  # Agrega este campo
+    costo_director = models.DecimalField(max_digits=8, decimal_places=2, default=0) 
     
     def calcular_costo(self):
         if self.regularidad == 'semanal':
