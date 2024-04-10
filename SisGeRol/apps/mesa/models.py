@@ -20,9 +20,9 @@ class Mesa(models.Model):
     
     def calcular_costo(self):
         if self.regularidad == 'semanal':
-            return 2800
+            return 6000
         elif self.regularidad == 'quincenal':
-            return 2500
+            return 3000
         else:
             return 0
     def duracion_meses_range(self):
@@ -32,7 +32,7 @@ class Mesa(models.Model):
     
     def save(self, *args, **kwargs):
         self.costo = self.calcular_costo()
-        self.costo_director = self.costo - 500 
+        self.costo_director = self.costo / 2
         super(Mesa, self).save(*args, **kwargs)
     
     def __str__(self):

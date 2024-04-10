@@ -89,3 +89,6 @@ class MesaUpdateView(UpdateView):
     
     def get_success_url(self):
         return reverse_lazy('mesa_detail', kwargs={'pk': self.object.pk})
+    
+    
+    
