@@ -3,75 +3,103 @@
 {% block title %}Lista de Socios{% endblock %}
 
 {% block extra_head %}
-    <style>
-        /* Estilos específicos para lista_socios.html */
-        .author-details {
-            margin: 20px;
-        }
+<style>
+    /* Estilos específicos para lista_socios.html */
+    .author-details {
+        margin: 20px;
+    }
 
-        .fixed-button {
-            position: fixed;
-            bottom: 50%;
-            right: 10px;  /* Ajusta el margen derecho según tus preferencias */
-            transform: translateY(50%);
-        }
-    </style>
+    .fixed-button {
+
+        bottom: 50%;
+        margin-left: 60px;
+        /* Ajusta el margen derecho según tus preferencias */
+        transform: translateY(50%);
+        z-index: 99;
+    }
+
+    .flex {
+        display: flex;
+
+        gap: px;
+
+
+    }
+
+    .center {
+        display: flex;
+        justify-content: center;
+        flex: 1;
+        margin: 9px;
+    }
+
+    .f {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .fondo {
+        background-color: #EBEBEB;
+    }
+</style>
 {% endblock %}
 
 {% block page_title %}Lista de Socios{% endblock %}
 
 {% block content %}
-    <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--12-col">
-            <div class="fixed-button">
-                <a href="{% url 'socio-create' %}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Crear Socio</a>
-            </div>
+<div class="mdl-grid ">
+    <div class="mdl-cell mdl-cell--12-col f ">
+        <div class="fixed-button">
+            <a href="{% url 'socio-create' %}"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Crear Socio</a>
         </div>
-        {% for socio in socios %}
-            <div class="mdl-cell mdl-cell--4-col mdl-cell--4-offset">
-                <div class="mdl-card mdl-shadow--6dp author-details">
-                    <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-                        <h2 class="mdl-card__title-text"><a href="{% url 'socio-detail' pk=socio.pk %}">Detalles del Socio</a></h2>
-                    </div>
+    </div>
+    {% for socio in socios %}
+    <div class="mdl-cell mdl-cell--4-col center  ">
+        <div class="mdl-card mdl-shadow--6dp author-details flex fondo">
+            <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                <h2 class="mdl-card__title-text"><a href="{% url 'socio-detail' pk=socio.pk %}">Detalles del Socio</a>
+                </h2>
+            </div>
 
-                    <div class="mdl-card mdl-shadow--6dp">
-                        <div class="mdl-card__supporting-text">
-                            <p><strong>Nombre:</strong> {{ socio.nombre }}</p>
-                            <p><strong>Apellido:</strong> {{ socio.apellido }}</p>
-                            <p><strong>DNI:</strong> {{ socio.dni }}</p>
-                            <p><strong>Fecha de Nacimiento:</strong> {{ socio.fecha_nacimiento }}</p>
-                        </div>
-                    </div>
-
-                    <div class="mdl-card__supporting-text">
-                        <h3>Mesas Jugadas:</h3>
-                        <ul>
-                            {% for mesa in socio.mesas_jugadas.all %}
-                                <li>
-                                    <strong>Nombre de la Mesa:</strong> {{ mesa.nombre }}<br>
-                                    <strong>Descripción:</strong> {{ mesa.descripcion }}<br>
-                                    <strong>Sistema:</strong> {{ mesa.sistema }}<br>
-                                    <strong>Costo:</strong> {{ mesa.costo }}<br>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-
-                    <div class="mdl-card__supporting-text">
-                        <h3>Mesas Dirigidas:</h3>
-                        <ul>
-                            {% for mesa in socio.mesas_dirigidas.all %}
-                                <li>
-                                    <strong>Nombre de la Mesa:</strong> {{ mesa.nombre }}<br>
-                                    <strong>Descripción:</strong> {{ mesa.descripcion }}<br>
-                                    <strong>Sistema:</strong> {{ mesa.sistema }}<br>
-                                    <strong>costo:</strong> {{ mesa.costo_director }}<br>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+            <div class="mdl-card mdl-shadow--6dp fondo ">
+                <div class="mdl-card__supporting-text">
+                    <p><strong>Nombre:</strong> {{ socio.nombre }}</p>
+                    <p><strong>Apellido:</strong> {{ socio.apellido }}</p>
+                    <p><strong>DNI:</strong> {{ socio.dni }}</p>
+                    <p><strong>Fecha de Nacimiento:</strong> {{ socio.fecha_nacimiento }}</p>
                 </div>
             </div>
-        {% endfor %}
+
+            <div class="mdl-card__supporting-text fondo">
+                <h3>Mesas Jugadas:</h3>
+                <ul>
+                    {% for mesa in socio.mesas_jugadas.all %}
+                    <li>
+                        <strong>Nombre de la Mesa:</strong> {{ mesa.nombre }}<br>
+                        <strong>Descripción:</strong> {{ mesa.descripcion }}<br>
+                        <strong>Sistema:</strong> {{ mesa.sistema }}<br>
+                        <strong>Costo:</strong> {{ mesa.costo }}<br>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="mdl-card__supporting-text fondo">
+                <h3>Mesas Dirigidas:</h3>
+                <ul>
+                    {% for mesa in socio.mesas_dirigidas.all %}
+                    <li>
+                        <strong>Nombre de la Mesa:</strong> {{ mesa.nombre }}<br>
+                        <strong>Descripción:</strong> {{ mesa.descripcion }}<br>
+                        <strong>Sistema:</strong> {{ mesa.sistema }}<br>
+                        <strong>costo:</strong> {{ mesa.costo_director }}<br>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
+    {% endfor %}
+</div>
 {% endblock %}

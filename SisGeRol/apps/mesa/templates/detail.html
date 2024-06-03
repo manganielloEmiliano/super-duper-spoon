@@ -3,171 +3,235 @@
 {% block title %}Detalles de la Mesa{% endblock %}
 
 {% block extra_head %}
-    <style>
-        /* Estilos específicos para detalle_mesa.html */
-        .author-details {
-            margin: 20px;
-        }
+<style>
+    /* Estilos específicos para detalle_mesa.html */
+    .author-details {
+        margin: 20px;
+    }
 
-        .section-title {
-            color: #FFF;
-            background-color: #2196F3;
-            padding: 8px;
-            margin-bottom: 10px;
-        }
+    .section-title {
+        color: #FFF;
+        background-color: #2196F3;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
 
-        .info-list {
-            list-style-type: none;
-            padding: 0;
-        }
+    .info-list {
+        list-style-type: none;
+        padding: 0;
+    }
 
-        .info-list li {
-            margin-bottom: 8px;
-        }
+    .info-list li {
+        margin-bottom: 8px;
+    }
 
-        .action-buttons {
-            margin-top: 20px;
-        }
+    .action-buttons {
+        margin-top: 20px;
+    }
 
-        .action-buttons button {
-            margin-right: 10px;
-        }
+    .action-buttons button {
+        margin-right: 10px;
+    }
 
-        .mesualidad-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    .mesualidad-table {
+        width: 85%;
+        border-collapse: collapse;
+        margin: 0 auto;
+    }
 
-        .mesualidad-table th, .mesualidad-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
+    .mesualidad-table th,
+    .mesualidad-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
 
-        .mesualidad-link-green {
-            color: green;
-        }
+    .mesualidad-link-green {
+        color: green;
+    }
 
-        .mesualidad-link-red {
-            color: red;
-        }
+    .mesualidad-link-red {
+        color: red;
+    }
 
-        .mesualidad-cost-green {
-            color: green;
-        }
+    .mesualidad-cost-green {
+        color: green;
+    }
 
-        .mesualidad-cost-red {
-            color: red;
-        }
-    </style>
+    .mesualidad-cost-red {
+        color: red;
+    }
+
+
+    /*nuevo*/
+    .trampa {
+        margin-bottom: 80px;
+    }
+
+    .contei {
+
+        margin: 0 auto;
+        max-width: 1040px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 60px;
+        gap: 5px 5px;
+        grid-auto-flow: row;
+        grid-template-areas:
+            "info-basica info-basica info-basica info-basica jugadores jugadores jugadores jugadores"
+            "director director mensualidades mensualidades mensualidades mensualidades mensualidades mensualidades"
+            "botones botones botones botones botones botones botones botones";
+        height: 600px;
+    }
+
+    .info-basica {
+        grid-area: info-basica;
+        background-color: #EBEBEB;
+    }
+
+    .director {
+        grid-area: director;
+        background-color: #EBEBEB;
+    }
+
+    .mensualidades {
+        grid-area: mensualidades;
+        background-color: #EBEBEB;
+    }
+
+    .botones {
+        grid-area: botones;
+        background-color: #EBEBEB;
+
+    }
+
+    .botones a {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .jugadores {
+        grid-area: jugadores;
+        background-color: #EBEBEB;
+    }
+
+    .padding {
+        padding: 0px 15px;
+    }
+
+    margin-b {
+        margin-bottom: 25px;
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+</style>
 {% endblock %}
 
 {% block page_title %}Detalles de la Mesa{% endblock %}
 
 {% block content %}
-    <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-offset">
-            <div class="mdl-card mdl-shadow--6dp author-details">
-                <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-                    <h2 class="mdl-card__title-text">Detalles de la Mesa</h2>
-                </div>
-
-                <!-- Información Básica -->
-                <div class="mdl-card__supporting-text">
-                    <h3 class="section-title">Información Básica:</h3>
-                    <ul class="info-list">
-                        <li><strong>Nombre de la mesa:</strong> {{ mesa.nombre }}</li>
-                        <li><strong>Descripción:</strong> {{ mesa.descripcion }}</li>
-                        <li><strong>Sistema:</strong> {{ mesa.sistema }}</li>
-                        <li><strong>Costo:</strong> {{ mesa.costo }}</li>
-                        <li><strong>Costo del Director:</strong> {{ mesa.costo_director }}</li>
-                    </ul>
-                </div>
-
-                <!-- Director y Regularidad -->
-                <div class="mdl-card__supporting-text">
-                    <h3 class="section-title">Director y Regularidad:</h3>
-                    <ul class="info-list">
-                        <li><strong>Director:</strong> {{ mesa.director.nombre }} {{ mesa.director.apellido }}</li>
-                        <li><strong>Regularidad:</strong> {{ mesa.regularidad }}</li>
-                    </ul>
-                </div>
-
-                <!-- Jugadores -->
-                <div class="mdl-card__supporting-text">
-                    <h3 class="section-title">Jugadores:</h3>
-                    <ul class="info-list">
-                        {% for jugador in mesa.jugadores.all %}
-                            <li>{{ jugador.nombre }} {{ jugador.apellido }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <!-- Mensualidades de Jugadores y Director -->
-                <div class="mdl-card__supporting-text">
-                    <h3 class="section-title">Mensualidades:</h3>
-                    <table class="mesualidad-table">
-                        <thead>
-                            <tr>
-                                <th>Participante</th>
-                                <th>Mes</th>
-                                <th>Costo a pagar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for jugador in mesa.jugadores.all %}
-                                {% for mensualidad in jugador.mensualidades.all %}
-                                    {% if mensualidad.mesa == mesa %}
-                                        <tr>
-                                            <td>{{ jugador.nombre }} {{ jugador.apellido }}</td>
-                                            <td>
-                                                <a href="{% url 'mensualidad-detail' pk=mensualidad.pk %}" class="{% if mensualidad.pagada %}mesualidad-link-green{% else %}mesualidad-link-red{% endif %}">
-                                                    {{ mensualidad.mes }}
-                                                </a>
-                                            </td>
-                                            <td class="{% if mensualidad.pagada %}mesualidad-cost-green{% else %}mesualidad-cost-red{% endif %}">
-                                                {{ mensualidad.costo_a_pagar }}
-                                            </td>
-                                        </tr>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
-
-                            <!-- Filas para las mensualidades del director -->
-                            {% for mensualidad_director in mesa.director.mensualidades.all %}
-                                {% if mensualidad_director.mesa == mesa %}
-                                    <tr>
-                                        <td>{{ mesa.director.nombre }} {{ mesa.director.apellido }}</td>
-                                        <td>
-                                            <a href="{% url 'mensualidad-detail' pk=mensualidad_director.pk %}" class="{% if mensualidad_director.pagada %}mesualidad-link-green{% else %}mesualidad-link-red{% endif %}">
-                                                {{ mensualidad_director.mes }}
-                                            </a>
-                                        </td>
-                                        <td class="{% if mensualidad_director.pagada %}mesualidad-cost-green{% else %}mesualidad-cost-red{% endif %}">
-                                            {{ mensualidad_director.costo_a_pagar }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Botones de Acción -->
-                <div class="action-buttons">
-                    <a href="{% url 'mesa-update' pk=mesa.pk %}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Editar Mesa</a>
-                    <button onclick="confirmDelete()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Eliminar Mesa</button>
-                </div>
-            </div>
-        </div>
+<div class="trampa"></div>
+<div class="contei">
+    <!-- Información Básica -->
+    <div class="info-basica padding margin">
+        <h4 class="">Información Básica</h4>
+        <ul class="">
+            <li><strong>Nombre de la mesa:</strong> {{ mesa.nombre }}</li>
+            <li><strong>Descripción:</strong> {{ mesa.descripcion }}</li>
+            <li><strong>Sistema:</strong> {{ mesa.sistema }}</li>
+            <li><strong>Costo:</strong> {{ mesa.costo }}</li>
+            <li><strong>Costo del Director:</strong> {{ mesa.costo_director }}</li>
+        </ul>
     </div>
+    <!-- Director y Regularidad -->
+    <div class="director padding">
+        <h4 class="">Director y Regularidad</h4>
+        <ul class="">
+            <li><strong>Director:</strong> {{ mesa.director.nombre }} {{ mesa.director.apellido }}</li>
+            <li><strong>Regularidad:</strong> {{ mesa.regularidad }}</li>
+        </ul>
+    </div>
+    <!-- Mensualidades de Jugadores y Director -->
+    <div class="mensualidades padding">
+        <h4 class="">Mensualidades</h4>
+        <table class="mesualidad-table">
+            <thead>
+                <tr>
+                    <th>Participante</th>
+                    <th>Mes</th>
+                    <th>Costo a pagar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for jugador in mesa.jugadores.all %}
+                {% for mensualidad in jugador.mensualidades.all %}
+                {% if mensualidad.mesa == mesa %}
+                <tr>
+                    <td>{{ jugador.nombre }} {{ jugador.apellido }}</td>
+                    <td>
+                        <a href="{% url 'mensualidad-detail' pk=mensualidad.pk %}"
+                            class="{% if mensualidad.pagada %}mesualidad-link-green{% else %}mesualidad-link-red{% endif %}">
+                            {{ mensualidad.mes }}
+                        </a>
+                    </td>
+                    <td
+                        class="{% if mensualidad.pagada %}mesualidad-cost-green{% else %}mesualidad-cost-red{% endif %}">
+                        {{ mensualidad.costo_a_pagar }}
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
 
-    <script>
-        function confirmDelete() {
-            var confirmDelete = confirm("¿Estás seguro de que deseas eliminar esta mesa?");
-            if (confirmDelete) {
-                window.location.href = "{% url 'mesa-delete' pk=mesa.pk %}";
-            }
+                <!-- Filas para las mensualidades del director -->
+                {% for mensualidad_director in mesa.director.mensualidades.all %}
+                {% if mensualidad_director.mesa == mesa %}
+                <tr>
+                    <td>{{ mesa.director.nombre }} {{ mesa.director.apellido }}</td>
+                    <td>
+                        <a href="{% url 'mensualidad-detail' pk=mensualidad_director.pk %}"
+                            class="{% if mensualidad_director.pagada %}mesualidad-link-green{% else %}mesualidad-link-red{% endif %}">
+                            {{ mensualidad_director.mes }}
+                        </a>
+                    </td>
+                    <td
+                        class="{% if mensualidad_director.pagada %}mesualidad-cost-green{% else %}mesualidad-cost-red{% endif %}">
+                        {{ mensualidad_director.costo_a_pagar }}
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Jugadores -->
+    <div class="jugadores padding">
+        <h4 class="">Jugadores</h4>
+        <ul class="">
+            {% for jugador in mesa.jugadores.all %}
+            <li>{{ jugador.nombre }} {{ jugador.apellido }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="botones padding flex">
+        <a href="{% url 'mesa-update' pk=mesa.pk %}"
+            class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Editar Mesa</a>
+        <button onclick="confirmDelete()"
+            class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Eliminar
+            Mesa</button>
+    </div>
+</div>
+</div>
+
+<script>
+    function confirmDelete() {
+        var confirmDelete = confirm("¿Estás seguro de que deseas eliminar esta mesa?");
+        if (confirmDelete) {
+            window.location.href = "{% url 'mesa-delete' pk=mesa.pk %}";
         }
-    </script>
+    }
+</script>
 {% endblock %}
